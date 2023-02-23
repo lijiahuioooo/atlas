@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mfw.atlas.provider.dao.ConsumerServiceDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.mfw.atlas.provider.model.po.ConsumerServicePO" id="consumerServiceMap">
+        <result property="id" column="id"/>
+        <result property="instanceId" column="instance_id"/>
+        <result property="serviceName" column="service_name"/>
+        <result property="serviceGroup" column="service_group"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="registerType" column="register_type"/>
+        <result property="protocol" column="protocol"/>
+        <result property="metadata" column="metadata"/>
+        <result property="serviceVersion" column="service_version"/>
+        <result property="serviceKey" column="service_key"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="ctime" column="ctime"/>
+        <result property="mtime" column="mtime"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="list">
+        insert into t_consumer_service
+        (instance_id,service_name,service_group,service_version,service_type,register_type,protocol,metadata,service_key)
+        VALUES
+        <foreach collection="list" item="providerPO" separator=",">
+            (#{providerPO.instanceId},#{providerPO.serviceName},#{providerPO.serviceGroup},#{providerPO.serviceVersion},#{providerPO.serviceType},#{providerPO.registerType},#{providerPO.protocol},#{providerPO.metadata},#{providerPO.serviceKey})
+        </foreach>
+    </insert>
+
+    <update id="updateBatch" parameterType="java.util.List" >
+        <if test="list!=null">
+            <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                update t_consumer_service
+                <set>
+                    <if test="item.instanceId != null" >
+                        instance_id = #{item.instanceId,jdbcType=VARCHAR},
+                    </if>
+                    <if test="item.serviceName != null" >
+                        service_name = #{item.serviceName,jdbcType=VARCHAR},
+                    </if>
+                    <if test="item.serviceGroup != null" >
+                        service_group = #{item.serviceGroup,jdbcType=VARCHAR},
+                    </if>
+                    <if test="item.serviceVersion != null" >
+                        service_version = #{item.serviceVersion,jdbcType=VARCHAR},
+                    </if>
+                    <if test="item.serviceType != null" >
+                        service_type = #{item.serviceType,jdbcType=TINYINT},
+                    </if>
+                    <if test="item.registerType != null" >
+                        register_type = #{item.registerType,jdbcType=TINYINT},
+                    </if>
+                    <if test="item.protocol != null" >
+                        protocol = #{item.protocol,jdbcType=VARCHAR},
+                    </if>
+                    <if test="item.metadata != null" >
+                        metadata = #{item.metadata,jdbcType=VARCHAR},
+                    </if>
+                    <if test="item.serviceKey != null" >
+                        service_key = #{item.serviceKey,jdbcType=VARCHAR},
+                    </if>
+                </set>
+                <where>
+                    id = #{item.id,jdbcType=BIGINT}
+                </where>
+            </foreach>
+        </if>
+    </update>
+
+</mapper>

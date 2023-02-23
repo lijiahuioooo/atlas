@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.mfw.atlas.sdk.spring.cloud.starter.NacosDiscoveryAutoConfiguration,\
+  com.mfw.atlas.sdk.spring.cloud.starter.MfwDiscoveryAutoConfiguration

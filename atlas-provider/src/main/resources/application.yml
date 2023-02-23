@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: atlasprovider-msp
+  profiles:
+    active: dev
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
+  typeAliasesPackage: com.mfw.atlas.provider.model.po
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: not_empty
+      column-underline: true
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+      db-type: mysql
+    refresh: true
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    database-id: mysql
+
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, metrics, metrics-requiredMetricName
+
+swagger:
+  enable: true

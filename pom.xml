@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mfw.atlas</groupId>
+    <artifactId>atlas</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.1-RELEASE</version>
+    <name>atlas</name>
+    <description>Demo project for Spring Boot</description>
+
+    <modules>
+        <module>atlas-admin</module>
+        <module>atlas-provider</module>
+        <module>atlas-client</module>
+        <module>atlas-sdk</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sharding-sphere.version>4.0.0-RC1</sharding-sphere.version>
+        <httpclient.version>4.5</httpclient.version>
+        <nacos.version>0.9.0.RELEASE</nacos.version>
+        <junit.version>4.12</junit.version>
+        <mybatis.springboot.version>1.3.0</mybatis.springboot.version>
+        <xxl-job.version>2.0.1</xxl-job.version>
+        <druid.version>1.1.18</druid.version>
+        <rocketmq-client-starter.version>2.0.3</rocketmq-client-starter.version>
+        <mafengwo-monitor.version>1.0.4-RELEASE</mafengwo-monitor.version>
+        <logback-ext-spring.version>0.1.4</logback-ext-spring.version>
+        <logback.version>1.1.7</logback.version>
+        <logstash-logback-encoder.version>4.7</logstash-logback-encoder.version>
+        <janino.version>3.1.0</janino.version>
+
+    </properties>
+
+    <parent>
+        <groupId>com.mafengwo.foundation.bom</groupId>
+        <artifactId>foundation-bom</artifactId>
+        <version>0.0.2</version>
+    </parent>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- springcloud依赖 -->
+            <dependency>
+                <groupId>com.mafengwo.corp.cloud</groupId>
+                <artifactId>spring-cloud-mafengwo-dependencies</artifactId>
+                <version>0.0.3.1-RELESE</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <!-- junit -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!--Mybatis-Plus集成-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.3.0</version>
+            </dependency>
+            <!-- druid -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!-- httpclient -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <!-- monitor -->
+            <dependency>
+                <groupId>com.mfw.middleware</groupId>
+                <artifactId>monitor</artifactId>
+                <version>${mafengwo-monitor.version}</version>
+            </dependency>
+            <!-- logback日志依赖 -->
+            <dependency>
+                <groupId>org.logback-extensions</groupId>
+                <artifactId>logback-ext-spring</artifactId>
+                <version>${logback-ext-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.janino</groupId>
+                <artifactId>janino</artifactId>
+                <version>${janino.version}</version>
+            </dependency>
+            <!-- logback转json -->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback-encoder.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.devh</groupId>
+                <artifactId>grpc-server-spring-boot-starter</artifactId>
+                <version>2.1.0.RELEASE</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+</project>

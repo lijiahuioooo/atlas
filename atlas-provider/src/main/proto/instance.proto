@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+package beehive.service.v2;
+
+option java_package = "com.mfw.atlas.provider.grpc";
+
+// Instance 模型
+message Instance {
+    // 实例id
+    string instanceId = 1;
+    // 等级
+    string level = 2 [deprecated = true];
+    // 端口信息
+    repeated PortInfo ports = 3;
+    // 当前的ip地址
+    string ip = 4;
+    // 环境code
+    string envCode = 5;
+    // 环境类型
+    string envType = 6;
+    // 环境分组
+    string envGroup = 7;
+    // 当前实例的集群
+    string cluster = 8;
+    // 当前服务的版本
+    string version = 9;
+    // 是否处于上线的状态
+    bool enabled = 11;
+    // 实例状态，枚举值：starting（启动中）、probing（监控检测中）等、业务侧一般只关心实例是否在线，则取上一个字段：enabled 即可。
+    string state = 12;
+    // 健康检测结果
+    // passed、checking、failed
+    string healthState = 13 [deprecated = true];
+    // 应用code
+    string appCode = 14;
+    // ecs or k8s
+    string provider = 15;
+    // 扩展参数
+    map<string, string> label = 16;
+    // hostname
+    string hostname = 17;
+    // 实例分配的 CPU
+    float cpu = 18;
+    // 实例分配的内存，单位是 MB
+    int32 memory = 19;
+    // 磁盘，单位 MB
+    int32 disk = 20;
+    // 操作系统
+    string os = 21;
+    // 镜像
+    map<string, string> image = 22;
+    // 机房信息
+    string idc = 23;
+    // 实例 reversion 。注意：这个值，是严格递增的（不一定增1），可能会持续变化。此值，只能推送方来改，主要是用来保证数据不被回滚的标识（需要发现中心适配）。
+    int64 reversion = 24;
+    // 实例状态  1：实例可用 2：实例摘除 0:其它
+    int32 status = 25;
+}
+
+message PortInfo {
+    // 端口名称：http、grpc、tcp
+    string name = 1;
+    // 端口协议：http、grpc、tcp
+    string protocol = 2;
+    // 端口号
+    int32 port = 3;
+}
+
+// 接口：实例列表
+
+message InstanceList {
+    // 实例列表
+    repeated Instance instance = 1;
+}
+
+// 获取所有 instance 列表
+message GetAllInstancesRequest {
+    // 0下线 1上线 -1全量
+    int32 status = 1;
+    string provider = 2;
+}
+
+message CommonResponse {
+    // 接口返回的 code ，0 为正常，非 0 异常
+    int32 code = 1;
+    string msg = 2;
+}
+
+// 同步全部 instance
+message SynAllInstancesRequest {
+    repeated Instance instance = 1;
+}
+
+// 增量同步 instance
+message SynInstancesRequest {
+    repeated Instance instance = 1;
+}
+
+// 服务
+service InstanceService {
+
+    // 全量同步实例
+    rpc synAllInstance (SynAllInstancesRequest) returns (CommonResponse) {
+    }
+
+    // 增量同步实例
+    rpc synInstance (SynInstancesRequest) returns (CommonResponse) {
+    }
+
+    // 获取所有实例
+    rpc getAllInstance (GetAllInstancesRequest) returns (InstanceList) {
+    }
+}

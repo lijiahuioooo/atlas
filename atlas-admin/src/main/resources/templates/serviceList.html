@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>服务发现后台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description"/>
+    <meta content="MyraStudio" name="author"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="../assets/images/favicon.ico">
+
+    <!-- Plugins css -->
+    <link href="../plugins/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+    <link href="../plugins/datatables/responsive.bootstrap4.css" rel="stylesheet" type="text/css"/>
+    <link href="../plugins/datatables/buttons.bootstrap4.css" rel="stylesheet" type="text/css"/>
+    <link href="../plugins/datatables/select.bootstrap4.css" rel="stylesheet" type="text/css"/>
+
+    <!-- App css -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../assets/css/theme.min.css" rel="stylesheet" type="text/css"/>
+
+    <style type="text/css">
+        .dn { display: none }
+        .service-item { cursor:pointer }
+        .service-item:hover, .service-item.selected { background:#f9f9f9 }
+    </style>
+
+</head>
+
+
+<body>
+
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="vertical-menu">
+
+        <div data-simplebar class="h-100">
+
+            <div class="navbar-brand-box">
+                <a href="#" class="logo">
+                    <img src="https://aos.mfwdev.com/favicon.ico"/>
+                </a>
+            </div>
+
+            <!--- Sidemenu -->
+            <div id="sidebar-menu">
+                <!-- Left Menu Start -->
+                <ul class="metismenu list-unstyled" id="side-menu">
+                    <li class="menu-title">Menu</li>
+                    <li>
+                        <a href="#" class="waves-effect"><i class='bx bx-home-smile'></i><span>服务信息</span></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Sidebar -->
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-flex align-items-center justify-content-between">
+                            <h4 class="mb-0 font-size-18">服务信息</h4>
+
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item active"><input type="text" id="simpleinput"  name="appcode" th:value="${appcode}" class="form-control" placeholder="appcode"></li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- end page title -->
+
+                <!服务组合列表>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">服务列表</h4>
+                                <p class="card-subtitle mb-4"></p>
+                                <table th:if="${#lists.isEmpty(serviceGroups)}" id="basic-datatable2" class="table dt-responsive nowrap">
+                                    <center><font color="red">请输入appcode</font></center>
+                                </table>
+                                <table th:if="not ${#lists.isEmpty(serviceGroups)}" id="basic-datatable2" class="table dt-responsive nowrap">
+
+                                    <thead>
+                                    <tr>
+                                        <th>服务名</th>
+                                        <th>AppCode</th>
+                                        <th>实例数</th>
+                                    </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                    <tr th:each="service:${serviceGroups}" th:data-appcode="${service.appCode}" th:class="service-item">
+                                        <td th:text="${service.serviceName}"></td>
+                                        <td th:text="${service.appCode}"></td>
+                                        <td th:text="${service.instanceSize}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div> <!-- end card body-->
+                        </div> <!-- end card -->
+                    </div><!-- end col-->
+                </div>
+
+                <!-- 实例列表-->
+                <div class="row sub-row dn">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">可用实例列表</h4>
+                                <p class="card-subtitle mb-4"></p>
+
+                                <table id="basic-datatable1" class="table dt-responsive nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th>实例ID</th>
+                                        <th>appcode</th>
+                                        <th>版本号</th>
+                                        <th>ip</th>
+                                        <th>环境</th>
+                                        <th>分组</th>
+                                        <th>cpu</th>
+                                        <th>memory</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="instance:${instances}" th:class="'instance-item instance-item-'+${instance.appCode}">
+                                        <td th:text="${instance.instanceId}"></td>
+                                        <td th:text="${instance.appCode}"></td>
+                                        <td th:text="${instance.version}"></td>
+                                        <td th:text="${instance.ip}"></td>
+                                        <td th:text="${instance.envType}"></td>
+                                        <td th:text="${instance.envGroup}"></td>
+                                        <td th:text="${instance.cpu}"></td>
+                                        <td th:text="${instance.memory}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div> <!-- end card body-->
+                        </div> <!-- end card -->
+                    </div><!-- end col-->
+                </div>
+                <!-- end row-->
+
+                <!-- 订阅列表-->
+                <div class="row sub-row dn">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">订阅的服务列表</h4>
+                                <p class="card-subtitle mb-4"></p>
+
+                                <table id="basic-datatable4" class="table dt-responsive nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th>发起订阅的实例ID</th>
+                                        <th>订阅服务名</th>
+                                        <th>订阅服务类型</th>
+                                        <th>订阅服务注册类型</th>
+                                        <th>订阅服务协议</th>
+                                        <th>订阅服务元数据</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr th:each="consumer:${subscribe}" th:class="'consume-item consume-item-'+${consumer.appCode}">
+                                        <td th:text="${consumer.instanceId}"></td>
+                                        <td th:text="${consumer.serviceName}"></td>
+                                        <td th:text="${consumer.serviceType}"></td>
+                                        <td th:text="${consumer.registerType}"></td>
+                                        <td th:text="${consumer.protocol}"></td>
+                                        <td th:text="${consumer.metadata}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div> <!-- end card body-->
+                        </div> <!-- end card -->
+                    </div><!-- end col-->
+                </div>
+                <!-- end row-->
+
+                <!-- 被订阅列表-->
+                <div class="row sub-row dn">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">被哪些服务订阅</h4>
+                                <p class="card-subtitle mb-4"></p>
+
+                                <table id="basic-datatable3" class="table dt-responsive nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th>服务名</th>
+                                        <th>实例ID</th>
+                                        <th>服务类型</th>
+                                        <th>注册类型</th>
+                                        <th>协议</th>
+                                        <th>元数据</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr th:each="consumer:${consumers}" th:class="'consumer-item consumer-item-'+${consumer.consumeServiceAppCode}">
+                                        <td th:text="${consumer.consumerServicePO.serviceName}"></td>
+                                        <td th:text="${consumer.consumerServicePO.instanceId}"></td>
+                                        <td th:if="${consumer.consumerServicePO.serviceType} eq 1">SPRING_CLOUD</td>
+                                        <td th:if="${consumer.consumerServicePO.serviceType} eq 2">DUBBO</td>
+                                        <td th:if="${consumer.consumerServicePO.registerType} eq 1">ZOOKEEPER</td>
+                                        <td th:if="${consumer.consumerServicePO.registerType} eq 2">NACOS</td>
+                                        <td th:if="${consumer.consumerServicePO.registerType} eq 3">MFW</td>
+                                        <td th:text="${consumer.consumerServicePO.protocol}"></td>
+                                        <td th:text="${consumer.consumerServicePO.metadata}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div> <!-- end card body-->
+                        </div> <!-- end card -->
+                    </div><!-- end col-->
+                </div>
+                <!-- end row-->
+
+            </div> <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->
+
+<!-- Overlay-->
+<div class="menu-overlay"></div>
+
+
+<!-- jQuery  -->
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="../assets/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/metismenu.min.js"></script>
+<script src="../assets/js/waves.js"></script>
+<script src="../assets/js/simplebar.min.js"></script>
+
+<!-- third party js -->
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables/dataTables.bootstrap4.js"></script>
+<script src="../plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="../plugins/datatables/responsive.bootstrap4.min.js"></script>
+<script src="../plugins/datatables/dataTables.buttons.min.js"></script>
+<script src="../plugins/datatables/buttons.bootstrap4.min.js"></script>
+<script src="../plugins/datatables/buttons.html5.min.js"></script>
+<script src="../plugins/datatables/buttons.flash.min.js"></script>
+<script src="../plugins/datatables/buttons.print.min.js"></script>
+<script src="../plugins/datatables/dataTables.keyTable.min.js"></script>
+<script src="../plugins/datatables/dataTables.select.min.js"></script>
+
+<!-- Datatables init -->
+<script src="../assets/pages/datatables-demo.js"></script>
+
+<!-- App js -->
+<script src="../assets/js/theme.js"></script>
+
+</body>
+
+<script>
+(function() {
+    var selectedAppCode;
+
+    function serach() {
+        var host = window.location.host;
+
+        var appcode = $("#simpleinput").val()
+        window.location.href = "http://" + host + "/discovery/serviceList?appcode=" + appcode;
+    }
+
+    $('#simpleinput').keyup(function (event) {
+        if (event.keyCode == 13) {
+            serach();
+        }
+    });
+
+    $('.service-item').click(function (event) {
+        selectedAppCode = $(event.currentTarget).data('appcode');
+
+        $(event.currentTarget).addClass('selected').siblings().removeClass('selected');
+
+        $('.sub-row').removeClass('dn');
+
+        $('.instance-item').addClass('dn');
+        $('.instance-item-'+selectedAppCode).removeClass('dn');
+
+        $('.consume-item').addClass('dn');
+        $('.consume-item-'+selectedAppCode).removeClass('dn');
+
+        $('.consumer-item').addClass('dn');
+        $('.consumer-item-'+selectedAppCode).removeClass('dn');
+    })
+} ());
+</script>
+</html>

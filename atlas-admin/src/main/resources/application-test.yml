@@ -1,0 +1,28 @@
+server.port: 80
+
+
+spring:
+  #数据库配置
+  datasource:
+    url: jdbc:mysql://db-mgr_callcenter_dev.public.mfw:3328/atlas_register?zeroDateTimeBehavior=convertToNull&useUnicode=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: atlas_register_w
+    password: RRxxHsuHpDBRBnDaB9CJMS8
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    separator: //
+    druid:
+      test-on-borrow: true
+      test-on-return: false
+      test-while-idle: true
+      initial-size: 5
+      max-active: 50
+      max-wait: 30000
+      min-idle: 5
+      validationQuery: select 1
+
+# 日志配置
+log:
+  root:
+    level: info
+  dir: mfw_rundata/logdata/machine/runtime/json_atlas_provider/
+
